@@ -1,0 +1,42 @@
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE `roles`;
+DROP TABLE IF EXISTS SPRING_SESSION_ATTRIBUTES;
+DROP TABLE IF EXISTS SPRING_SESSION;
+
+CREATE TABLE SPRING_SESSION (
+	PRIMARY_ID CHAR(36) NOT NULL,
+	SESSION_ID CHAR(36) NOT NULL,
+	CREATION_TIME BIGINT NOT NULL,
+	LAST_ACCESS_TIME BIGINT NOT NULL,
+	MAX_INACTIVE_INTERVAL INT NOT NULL,
+	EXPIRY_TIME BIGINT NOT NULL,
+	PRINCIPAL_NAME VARCHAR(100),
+	CONSTRAINT SPRING_SESSION_PK PRIMARY KEY (PRIMARY_ID)
+) ENGINE=InnoDB ROW_FORMAT=DYNAMIC;
+
+CREATE UNIQUE INDEX SPRING_SESSION_IX1 ON SPRING_SESSION (SESSION_ID);
+CREATE INDEX SPRING_SESSION_IX2 ON SPRING_SESSION (EXPIRY_TIME);
+CREATE INDEX SPRING_SESSION_IX3 ON SPRING_SESSION (PRINCIPAL_NAME);
+
+CREATE TABLE SPRING_SESSION_ATTRIBUTES (
+	SESSION_PRIMARY_ID CHAR(36) NOT NULL,
+	ATTRIBUTE_NAME VARCHAR(200) NOT NULL,
+	ATTRIBUTE_BYTES BLOB NOT NULL,
+	CONSTRAINT SPRING_SESSION_ATTRIBUTES_PK PRIMARY KEY (SESSION_PRIMARY_ID, ATTRIBUTE_NAME),
+	CONSTRAINT SPRING_SESSION_ATTRIBUTES_FK FOREIGN KEY (SESSION_PRIMARY_ID) REFERENCES SPRING_SESSION(PRIMARY_ID) ON DELETE CASCADE
+) ENGINE=InnoDB ROW_FORMAT=DYNAMIC;
+
+
+insert into `roles` (`id`, `desc`, `name`) values('1','Secretary User - The secretary of department','ROLE_SECRETARY');
+insert into `roles` (`id`, `desc`, `name`) values('2','Professor User - The professor','ROLE_PROFESSOR');
+insert into `roles` (`id`, `desc`, `name`) values('3','Student User - The student','ROLE_STUDENT');
+
+delete from `users` where id IN (1, 2);
+delete from `users_roles` where user_id IN (1, 2);
+
+insert  into `users`(`id`,`email`,`full_name`,`password`,`status`) values (1,'professor@gmail.com','Professor','{bcrypt}$2a$10$T6.E6f7B0FeXj5J4qqpov.znsM332dKiOvORolg8IVMIcyBtvDvuW',2), (2,'student@gmail.com','Student','{bcrypt}$2a$10$T6.E6f7B0FeXj5J4qqpov.znsM332dKiOvORolg8IVMIcyBtvDvuW',2);
+
+insert  into `users_roles`(`user_id`,`role_id`) values (1, 2);
+insert  into `users_roles`(`user_id`,`role_id`) values (2, 3);
+
+SET FOREIGN_KEY_CHECKS = 1;
