@@ -134,6 +134,8 @@ Professor.addChoice = function (questionEleId) {
 
     Professor.updateChoiceIndexes(questionEleId);
 
+    Professor.displayChoiceIcon(questionEle);
+
     newChoiceEle.on('click', '.remove-choice-button', function (event) {
         event.preventDefault();
 
@@ -180,8 +182,9 @@ Professor.onQuestionTypeChanged = function (questionEleId, questionTypeVal) {
     Logger.info('Professor', 'onQuestionTypeChanged', 'questionEleId=' + questionEleId,
         'questionTypeVal=' + questionTypeVal);
 
-    var optionsEle = $(questionEleId + ' .options-element');
-    var solutionEle = $(questionEleId + ' .solution-element');
+    var questionEle = $(questionEleId);
+    var optionsEle = questionEle.find('.options-element');
+    var solutionEle = questionEle.find('.solution-element');
 
     switch (parseInt(questionTypeVal)) {
         case Common.questionTypes.shortAnswer:
@@ -196,6 +199,20 @@ Professor.onQuestionTypeChanged = function (questionEleId, questionTypeVal) {
             solutionEle.addClass('d-none');
             break;
     }
+
+    Professor.displayChoiceIcon(questionEle, questionTypeVal);
+};
+
+Professor.displayChoiceIcon = function (questionEle, questionTypeVal) {
+    if (!questionTypeVal) {
+        questionTypeVal = questionEle.find('.question-type-element').val();
+    }
+
+    var choiceIconEle = questionEle.find('.choice-icon');
+    var activeChoiceIconEle = questionEle.find('.choice-icon-' + questionTypeVal);
+
+    choiceIconEle.hide();
+    activeChoiceIconEle.show();
 };
 
 Professor.examFormEvents = function () {

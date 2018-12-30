@@ -100,7 +100,8 @@
 
         <div class="options-element ${empty questionType or questionType eq 1 or questionType eq 2 ? 'd-none' : ''}">
             <c:forEach var="i" begin="0" end="${countChoices-1}">
-                <t:choice questionIndex="${questionIndex}" choiceIndex="${i}" editable="${editable}"/>
+                <t:choice questionIndex="${questionIndex}" choiceIndex="${i}" editable="${editable}"
+                          questionType="${questionType}"/>
             </c:forEach>
 
             <div class="row mt-4 mr-1 d-flex justify-content-end">

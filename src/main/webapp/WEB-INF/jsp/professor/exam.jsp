@@ -126,7 +126,7 @@
                     </script>
 
                     <script id="choice-template" type="text/x-handlebars-template">
-                            <t:choice questionIndex="0" choiceIndex="0" editable="${exam.editable}"></t:choice>
+                            <t:choice questionIndex="0" choiceIndex="0" editable="${exam.editable}" questionType="0"/>
                     </script>
                 </c:if>
             </form:form>

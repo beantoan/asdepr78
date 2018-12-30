@@ -1,6 +1,7 @@
-<%@attribute name="editable" required="true" type="java.lang.Boolean" %>
-<%@attribute name="questionIndex" required="true" type="java.lang.Integer" %>
-<%@attribute name="choiceIndex" required="false" type="java.lang.Integer" %>
+<%@ attribute name="questionType" required="true" type="java.lang.Integer" %>
+<%@ attribute name="editable" required="true" type="java.lang.Boolean" %>
+<%@ attribute name="questionIndex" required="true" type="java.lang.Integer" %>
+<%@ attribute name="choiceIndex" required="false" type="java.lang.Integer" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -11,7 +12,13 @@
                  cssClass="id-hidden-element input-element"/>
 
     <div class="input-group-prepend mr-1">
-        <span class="input-group-text">Option&nbsp;<span class="choice-index">${choiceIndex + 1}</span></span>
+        <span class="input-group-text">
+            <i class="material-icons choice-icon choice-icon-3 mr-1"
+               style="${questionType eq 3 ? '' : 'display: none'}">radio_button_unchecked</i>
+            <i class="material-icons choice-icon choice-icon-4 mr-1"
+               style="${questionType eq 4 ? '' : 'display: none'}">check_box_outline_blank</i>
+
+            #<span class="choice-index">${choiceIndex + 1}</span></span>
     </div>
 
     <form:input path="questions[${questionIndex}].choices[${choiceIndex}].title"
