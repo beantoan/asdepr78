@@ -82,12 +82,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
-                                <label class="bmd-label-floating">Duration (minutes)</label>
-                                <form:input path="duration" type="number"
-                                            cssClass="form-control" autocomplete="off" required="true" min="10"
-                                            disabled="${exam.editable ? '' : true}"/>
-                                <div class="invalid-feedback">
-                                    The duration should be greater than or equal to 10 minutes
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Duration (minutes)</label>
+                                    <form:input path="duration" type="number"
+                                                cssClass="form-control" autocomplete="off" required="true" min="10"
+                                                disabled="${exam.editable ? '' : true}"/>
+                                    <div class="invalid-feedback">
+                                        The duration should be greater than or equal to 10 minutes
+                                    </div>
                                 </div>
                             </div>
                         </div>
