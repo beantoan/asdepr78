@@ -88,7 +88,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 }
 
                 if (now.getTime() > exam.getFinishedAt().getTime() ||
-                        exam.getFinishedAt().getTime() > expectedEndTime) {
+                        exam.getFinishedAt().getTime() < expectedEndTime) {
                     String error = String.format("You can not continue the exam '%s'. Because you have started at %s. But the exam has been closed at %s.",
                             exam.getTitle(), format.format(submission.getStartedAt()), format.format(exam.getFinishedAt()));
                     throw new InvalidExamException(error);
